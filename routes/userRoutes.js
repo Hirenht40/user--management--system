@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 // Generate JWT token
 function generateToken(userId) {
@@ -38,7 +39,7 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
-  User.findOne({ username, password }, (err, user) => {
+  User.findOne({ username }, (err, user) => {
     if (err) {
       console.error(err);
       return res.status(500).send('Error finding user');
@@ -47,10 +48,15 @@ router.post('/login', (req, res) => {
       return res.status(401).send('Invalid username or password');
     }
 
-    // Generate JWT token
-    const token = generateToken(user._id);
-
-    res.send({ token });
+    // Compare hashed passwords
+    if (bcrypt.compareSync(password, user.password)) {
+      // Passwords match, generate JWT token
+      const token = generateToken(user._id);
+      res.send({ token });
+    } else {
+      // Passwords don't match
+      return res.status(401).send('Invalid username or password');
+    }
   });
 });
 
