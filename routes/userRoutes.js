@@ -70,6 +70,43 @@ router.get('/users', authenticateToken, (req, res) => {
   });
 });
 
+
+// DELETE /users/:id - Delete a user by ID
+router.delete('/users/:id', (req, res) => {
+  const userId = req.params.id;
+
+  User.findByIdAndDelete(userId, (err, deletedUser) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error deleting user');
+    }
+
+    if (!deletedUser) {
+      return res.status(404).send('User not found');
+    }
+
+    res.send('User deleted successfully');
+  });
+});
+
+router.put('/users/:id', (req, res) => {
+  const userId = req.params.id;
+  const updatedUser = req.body;
+
+  User.findByIdAndUpdate(userId, updatedUser, { new: true }, (err, updatedUser) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error updating user');
+    }
+
+    if (!updatedUser) {
+      return res.status(404).send('User not found');
+    }
+
+    res.send(updatedUser);
+  });
+});
+
 // Middleware to authenticate token
 function authenticateToken(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
