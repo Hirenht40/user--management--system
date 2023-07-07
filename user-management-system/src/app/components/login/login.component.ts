@@ -28,8 +28,9 @@ export class LoginComponent {
           // Save the token in localStorage
           localStorage.setItem('token', token);
   // Redirect to the users page
+  alert('Logged in successfully!');
+
   this.router.navigate(['users']);
-          // alert('Logged in successfully!');
         },
         (error) => {
           console.error(error);

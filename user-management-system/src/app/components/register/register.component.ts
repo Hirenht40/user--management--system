@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,7 @@ export class RegisterComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,  private router: Router) { }
 
   registerUser() {
     const newUser = {
@@ -34,6 +35,8 @@ export class RegisterComponent {
         (response) => {
           if (response === 'Successfully registered') {
             alert('User registered successfully!');
+            this.router.navigate(['login']);
+
           } else {
             alert('Error registering user. Please try again.');
           }
