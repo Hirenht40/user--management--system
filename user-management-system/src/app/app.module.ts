@@ -6,9 +6,11 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { RegisterComponent } from './components/register/register.component';
-import { FormsModule } from '@angular/forms'; // Add this line
+import { FormsModule } from '@angular/forms'; 
 import {  HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptor/jwt.interceptor';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { RouterModule, Routes } from '@angular/router';
 
 
 @NgModule({
@@ -17,12 +19,14 @@ import { JwtInterceptor } from './interceptor/jwt.interceptor';
     LoginComponent,
     UserListComponent,
     RegisterComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule 
+    HttpClientModule,
+    RouterModule.forRoot([])
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
