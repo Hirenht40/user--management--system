@@ -1,8 +1,4 @@
-<h2>User List
-    <button (click)="logout()" class="logout-button" >Logout</button>
-
-</h2>
-
+<h2>User List</h2>
 <table>
   <thead>
     <tr>
@@ -10,6 +6,7 @@
       <th>Email</th>
       <th>Address</th>
       <th>Mobile No</th>
+      <th>Actions</th> <!-- Added a new column for actions -->
     </tr>
   </thead>
   <tbody>
@@ -18,6 +15,10 @@
       <td>{{ user.email }}</td>
       <td>{{ user.address }}</td>
       <td>{{ user.mobileNo }}</td>
+      <td>
+        <button (click)="updateUser(user._id)">Update</button>
+        <button (click)="deleteUser(user._id)">Delete</button>
+      </td>
     </tr>
   </tbody>
 </table>

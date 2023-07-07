@@ -28,6 +28,34 @@ export class UserListComponent {
       );
   }
 
+  deleteUser(userId: string) {
+    this.http.delete(`http://localhost:3000/users/${userId}`)
+      .subscribe(
+        () => {
+          // Remove the deleted user from the array
+          this.users = this.users.filter(user => user._id !== userId);
+          alert('User deleted successfully!');
+        },
+        (error) => {
+          if (error.status === 200) {
+            // Assuming the API returns status code 200 even for successful deletions
+            // Remove the deleted user from the array
+            this.users = this.users.filter(user => user._id !== userId);
+            alert('User deleted successfully!');
+          } else {
+            console.error(error);
+            alert('Error deleting user. Please try again.');
+          }
+        }
+      );
+  }
+  
+
+  updateUser(userId: string) {
+    // Navigate to the update user page with the user ID as a parameter
+    this.router.navigate(['/update-user', userId]);
+  }
+
   logout() {
     // Remove JWT token from localStorage or session storage
     localStorage.removeItem('token');
