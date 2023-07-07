@@ -7,6 +7,9 @@ import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormsModule } from '@angular/forms'; // Add this line
+import {  HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './interceptor/jwt.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +24,9 @@ import { FormsModule } from '@angular/forms'; // Add this line
     FormsModule,
     HttpClientModule 
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

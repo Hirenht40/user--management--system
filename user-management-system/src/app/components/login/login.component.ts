@@ -18,9 +18,15 @@ export class LoginComponent {
       password: this.password
     };
 
-    this.http.post('http://localhost:3000/login', credentials)
+    this.http.post<any>('http://localhost:3000/login', credentials)
       .subscribe(
-        () => {
+        (response) => {
+          // Retrieve the token from the response
+          const token = response.token;
+
+          // Save the token in localStorage
+          localStorage.setItem('token', token);
+
           alert('Logged in successfully!');
         },
         (error) => {
