@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import axios from 'axios';
-
 
 @Component({
   selector: 'app-register',
@@ -20,7 +18,7 @@ export class RegisterComponent {
 
   constructor(private http: HttpClient) { }
 
-  async registerUser() {
+  registerUser() {
     const newUser = {
       fullName: this.fullName,
       mobileNo: this.mobileNo,
@@ -31,13 +29,16 @@ export class RegisterComponent {
       password: this.password
     };
   
-    try {
-      await axios.post('http://localhost:3000/register', newUser);
-      alert('User registered successfully!');
-    } catch (error) {
-      console.error(error);
-      alert('Error registering user. Please try again.');
-    }
+    this.http.post('http://localhost:3000/register', newUser)
+      .subscribe(
+        () => {
+          alert('User registered successfully!');
+        },
+        (error) => {
+          console.error(error);
+          alert('Error registering user. Please try again.');
+        }
+      );
   }
   
 }
