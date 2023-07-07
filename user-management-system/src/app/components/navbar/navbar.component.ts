@@ -1,26 +1,30 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit ,ChangeDetectorRef  } from '@angular/core';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
-  isLoggedIn: boolean = false;
+export class NavbarComponent implements OnInit  {
+  isUserLoggedIn: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    // Check if user is already logged in
-    this.isLoggedIn = !!localStorage.getItem('token');
+    this.checkLoginStatus();
+  }
+
+  checkLoginStatus(): void {
+    const token = localStorage.getItem('token');
+    this.isUserLoggedIn = !!token;
+    this.cdr.detectChanges(); // Trigger change detection to update the view
   }
 
   logout(): void {
-    // Clear the token from local storage and update isLoggedIn status
     localStorage.removeItem('token');
-    this.isLoggedIn = false;
-    // Redirect to the login page
+    this.checkLoginStatus();
     this.router.navigate(['/login']);
   }
 }

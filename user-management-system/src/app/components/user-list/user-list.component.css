@@ -1,9 +1,31 @@
-table {
+h2 {
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logout-button {
+    background-color: #f80606;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: auto; /* Add this line to push the button to the right */
+  }
+  
+  .user-list-container {
+    position: relative;
+  }
+  
+  table {
     width: 100%;
     border-collapse: collapse;
   }
   
-  th, td {
+  th,
+  td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
@@ -13,7 +35,4 @@ table {
     background-color: #f2f2f2;
   }
   
-  h2 {
-    margin-bottom: 16px;
-  }
   
