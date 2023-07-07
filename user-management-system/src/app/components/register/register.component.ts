@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-
+  userId: string = '';
   fullName: string = '';
   mobileNo: string = '';
   email: string = '';
@@ -17,10 +17,37 @@ export class RegisterComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient,  private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
+    this.route.paramMap.subscribe(params => {
+      this.userId = params.get('id')!;
+      if (this.userId) {
+        this.fetchUserDetails();
+      }
+    });
+  }
+  
 
-  registerUser() {
-    const newUser = {
+
+  fetchUserDetails() {
+    this.http.get<any>(`http://localhost:3000/users/${this.userId}`)
+      .subscribe(
+        (response) => {
+          this.fullName = response.fullName;
+          this.mobileNo = response.mobileNo;
+          this.email = response.email;
+          this.address = response.address;
+          this.qualification = response.qualification;
+          this.username = response.username;
+          this.password = response.password;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
+  registerOrUpdateUser() {
+    const user = {
       fullName: this.fullName,
       mobileNo: this.mobileNo,
       email: this.email,
@@ -29,23 +56,41 @@ export class RegisterComponent {
       username: this.username,
       password: this.password
     };
-  
-    this.http.post('http://localhost:3000/register', newUser, { responseType: 'text' })
-      .subscribe(
-        (response) => {
-          if (response === 'Successfully registered') {
-            alert('User registered successfully!');
-            this.router.navigate(['login']);
 
-          } else {
+    if (this.userId) {
+      // Update existing user
+      this.http.put(`http://localhost:3000/users/${this.userId}`, user, { responseType: 'text' })
+        .subscribe(
+          (response) => {
+            if (response === 'Successfully updated') {
+              alert('User updated successfully!');
+              this.router.navigate(['users']);
+            } else {
+              alert('Error updating user. Please try again.');
+            }
+          },
+          (error) => {
+            console.error(error);
+            alert('Error updating user. Please try again.');
+          }
+        );
+    } else {
+      // Register new user
+      this.http.post('http://localhost:3000/register', user, { responseType: 'text' })
+        .subscribe(
+          (response) => {
+            if (response === 'Successfully registered') {
+              alert('User registered successfully!');
+              this.router.navigate(['login']);
+            } else {
+              alert('Error registering user. Please try again.');
+            }
+          },
+          (error) => {
+            console.error(error);
             alert('Error registering user. Please try again.');
           }
-        },
-        (error) => {
-          console.error(error);
-          alert('Error registering user. Please try again.');
-        }
-      );
+        );
+    }
   }
-  
 }

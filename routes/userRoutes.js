@@ -103,7 +103,7 @@ router.put('/users/:id', (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    res.send(updatedUser);
+    res.send("Successfully updated");
   });
 });
 

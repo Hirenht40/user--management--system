@@ -1,6 +1,9 @@
-<form (submit)="registerUser()">
+<form (submit)="registerOrUpdateUser()">
   <div>
-    <h2>Registration Form</h2>
+    <h2 *ngIf="!userId" >Registration Form</h2>
+    <h2 *ngIf="userId" >Update User Details</h2>
+
+
 
     <label for="fullName">Full Name:</label>
     <input type="text" id="fullName" name="fullName" [(ngModel)]="fullName" required>
@@ -34,8 +37,10 @@
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" [(ngModel)]="password" required>
   </div>
-  <button type="submit">Register</button>
-  <p>Already registered? <a routerLink="/login">Login here</a></p>
+  <button type="submit" *ngIf="!userId">register</button>
+  <button type="submit" *ngIf="userId">Update</button>
+
+  <p *ngIf="!userId">Already registered? <a routerLink="/login">Login here</a></p>
 
 </form>
 <div class="login-link">

@@ -53,7 +53,7 @@ export class UserListComponent {
 
   updateUser(userId: string) {
     // Navigate to the update user page with the user ID as a parameter
-    this.router.navigate(['/update-user', userId]);
+    this.router.navigate(['/register', userId]);
   }
 
   logout() {
