@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,7 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) { }
 
   login(): void {
     const credentials = {
@@ -28,13 +30,15 @@ export class LoginComponent {
           // Save the token in localStorage
           localStorage.setItem('token', token);
   // Redirect to the users page
-  alert('Logged in successfully!');
+  this.toastr.success('Logged in successfully!');
+
 
   this.router.navigate(['users']);
         },
         (error) => {
           console.error(error);
-          alert('Login failed. Please try again.');
+          // alert(error.error);
+          this.toastr.error(error.error);
         }
       );
   }

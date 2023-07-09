@@ -6,7 +6,9 @@
       <th>Email</th>
       <th>Address</th>
       <th>Mobile No</th>
-      <th>Actions</th> <!-- Added a new column for actions -->
+      <th>Qualification</th>
+      <th>Username</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -15,9 +17,17 @@
       <td>{{ user.email }}</td>
       <td>{{ user.address }}</td>
       <td>{{ user.mobileNo }}</td>
+      <td>{{ user.qualification }}</td>
+      <td>{{ user.username }}</td>
       <td>
-        <button (click)="updateUser(user._id)">Update</button>
-        <button (click)="deleteUser(user._id)">Delete</button>
+        <div class="action">
+        <div (click)="updateUser(user._id)">
+          <i class="fas fa-pen"></i>
+        </div>
+        <div (click)="deleteUser(user._id)">
+          <i class="fas fa-trash-alt"></i>
+        </div>
+      </div>
       </td>
     </tr>
   </tbody>

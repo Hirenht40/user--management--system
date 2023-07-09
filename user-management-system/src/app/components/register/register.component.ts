@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-register',
@@ -17,7 +19,7 @@ export class RegisterComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: ToastrService) {
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('id')!;
       if (this.userId) {
@@ -63,7 +65,8 @@ export class RegisterComponent {
         .subscribe(
           (response) => {
             if (response === 'Successfully updated') {
-              alert('User updated successfully!');
+              this.toastr.success('User updated successfully!');
+
               this.router.navigate(['users']);
             } else {
               alert('Error updating user. Please try again.');
@@ -71,7 +74,8 @@ export class RegisterComponent {
           },
           (error) => {
             console.error(error);
-            alert('Error updating user. Please try again.');
+            const errormessage = JSON.parse(error.error);
+            this.toastr.error(errormessage);
           }
         );
     } else {
@@ -80,7 +84,9 @@ export class RegisterComponent {
         .subscribe(
           (response) => {
             if (response === 'Successfully registered') {
-              alert('User registered successfully!');
+              
+              this.toastr.success('User registered successfully!');
+
               this.router.navigate(['login']);
             } else {
               alert('Error registering user. Please try again.');
@@ -88,7 +94,8 @@ export class RegisterComponent {
           },
           (error) => {
             console.error(error);
-            alert('Error registering user. Please try again.');
+          const errormessage = JSON.parse(error.error);
+          this.toastr.error(errormessage);
           }
         );
     }

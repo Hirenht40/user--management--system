@@ -28,8 +28,7 @@ router.post('/register', (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        const errorMessages = Object.values(err.errors).map((error) => error.message);
-        res.status(400).send({ error: errorMessages });
+        res.status(400).send(Object.values(err.errors).map((error) => error.message));
       } else {
         console.error(err);
         res.status(500).send('Error saving user');
@@ -72,7 +71,7 @@ router.get('/users', authenticateToken, (req, res) => {
 
 
 // DELETE /users/:id - Delete a user by ID
-router.delete('/users/:id', (req, res) => {
+router.delete('/users/:id',authenticateToken, (req, res) => {
   const userId = req.params.id;
 
   User.findByIdAndDelete(userId, (err, deletedUser) => {
@@ -89,11 +88,15 @@ router.delete('/users/:id', (req, res) => {
   });
 });
 
-router.put('/users/:id', (req, res) => {
+router.put('/users/:id', authenticateToken, (req, res) => {
   const userId = req.params.id;
   const updatedUser = req.body;
 
-  User.findByIdAndUpdate(userId, updatedUser, { new: true }, (err, updatedUser) => {
+  User.findByIdAndUpdate(userId, updatedUser, { new: true, runValidators: true }, (err, updatedUser) => {
+    if (err && err.name === 'ValidationError') {
+      return res.status(400).send(Object.values(err.errors).map((error) => error.message));
+    }
+    
     if (err) {
       console.error(err);
       return res.status(500).send('Error updating user');
@@ -103,9 +106,12 @@ router.put('/users/:id', (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    res.send("Successfully updated");
+  
+
+    return res.send('Successfully updated');
   });
 });
+
 
 // Middleware to authenticate token
 function authenticateToken(req, res, next) {

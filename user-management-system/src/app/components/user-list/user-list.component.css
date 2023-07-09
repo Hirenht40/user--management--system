@@ -1,38 +1,135 @@
+
 h2 {
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .logout-button {
-    background-color: #f80606;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: auto; /* Add this line to push the button to the right */
+  to {
+    opacity: 1;
   }
-  
-  .user-list-container {
-    position: relative;
+}
+
+.logout-button {
+  background-color: #e53935;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: background-color 0.3s ease;
+  animation: pulse 1.5s infinite;
+}
+
+.logout-button:hover {
+  background-color: #c62828;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
+  50% {
+    transform: scale(1.1);
   }
-  
-  th,
-  td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+  100% {
+    transform: scale(1);
   }
-  
-  th {
-    background-color: #f2f2f2;
+}
+
+.user-list-container {
+  position: relative;
+  margin-top: 20px;
+  animation: slideIn 1s ease-in-out;
+
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
   }
-  
-  
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(251, 7, 7, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+th {
+  background-color: transparent;
+  font-weight: bold;
+  color: #000000;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+td {
+  background-color: rgba(220, 242, 81, 0.1);
+  color: #dc2c2c;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+tr:hover {
+  background-color: rgba(117, 19, 255, 0.1);
+}
+
+
+.action{
+  display: flex;
+  gap: 15px;
+}
+
+.fas.fa-pen{
+  color: green;
+  transition: color 0.3s ease, transform 0.5s ease;
+
+}
+
+.fas.fa-pen:hover{
+  color: rgb(5, 249, 34);
+  transform: translateY(-5px);
+}
+
+
+.fas.fa-trash-alt{
+  color: #f23e3e;
+  transition: color 0.3s ease, transform 0.5s ease;
+
+}
+
+.fas.fa-trash-alt:hover{
+  color: #fa0000;
+  transform: translateY(-5px);
+
+}
