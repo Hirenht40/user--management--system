@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-
+const apiUrl = 'https://user-management-system-5404.onrender.com';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +31,7 @@ export class RegisterComponent {
 
 
   fetchUserDetails() {
-    this.http.get<any>(`http://localhost:3000/users/${this.userId}`)
+    this.http.get<any>(`${apiUrl}/users/${this.userId}`)
       .subscribe(
         (response) => {
           this.fullName = response.fullName;
@@ -61,7 +61,7 @@ export class RegisterComponent {
 
     if (this.userId) {
       // Update existing user
-      this.http.put(`http://localhost:3000/users/${this.userId}`, user, { responseType: 'text' })
+      this.http.put(`${apiUrl}/users/${this.userId}`, user, { responseType: 'text' })
         .subscribe(
           (response) => {
             if (response === 'Successfully updated') {

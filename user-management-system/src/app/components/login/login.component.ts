@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
+const apiUrl = 'https://user-management-system-5404.onrender.com';
+
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,7 @@ export class LoginComponent {
       password: this.password
     };
 
-    this.http.post<any>('http://localhost:3000/login', credentials)
+    this.http.post<any>(`${apiUrl}/login`, credentials)
       .subscribe(
         (response) => {
           // Retrieve the token from the response

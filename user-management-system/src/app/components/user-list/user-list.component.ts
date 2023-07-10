@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+const apiUrl = 'https://user-management-system-5404.onrender.com';
 
 @Component({
   selector: 'app-user-list',
@@ -17,7 +18,7 @@ export class UserListComponent {
   }
 
   fetchUsers() {
-    this.http.get<any[]>('http://localhost:3000/users')
+    this.http.get<any[]>(`${apiUrl}/users`)
       .subscribe(
         (response) => {
           this.users = response;
@@ -29,7 +30,7 @@ export class UserListComponent {
   }
 
   deleteUser(userId: string) {
-    this.http.delete(`http://localhost:3000/users/${userId}`)
+    this.http.delete(`${apiUrl}/users/${userId}`)
       .subscribe(
         () => {
           // Remove the deleted user from the array
