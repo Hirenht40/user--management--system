@@ -24,12 +24,12 @@ db.once('open', () => {
 
 app.use('/', userRoutes);
 
-//static files
-app.use(express.static(path.join(__dirname, "./user-management-system/dist")));
+// //static files
+// app.use(express.static(path.join(__dirname, "./user-management-system/dist")));
 
-app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./user-management-system/dist/user-management-system/index.html"));
-});
+// app.get("*", function (req, res) {
+//   res.sendFile(path.join(__dirname, "./user-management-system/dist/user-management-system/index.html"));
+// });
 
 const port = 3000;
 app.listen(port, () => {
