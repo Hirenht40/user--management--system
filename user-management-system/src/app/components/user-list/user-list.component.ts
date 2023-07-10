@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 const apiUrl = 'https://user-management-system-5404.onrender.com';
 
 @Component({
@@ -11,7 +13,7 @@ const apiUrl = 'https://user-management-system-5404.onrender.com';
 export class UserListComponent {
   users: any[] = [];
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.fetchUsers();
@@ -42,10 +44,12 @@ export class UserListComponent {
             // Assuming the API returns status code 200 even for successful deletions
             // Remove the deleted user from the array
             this.users = this.users.filter(user => user._id !== userId);
-            alert('User deleted successfully!');
+            this.toastr.success('User deleted successfully!');
+
           } else {
             console.error(error);
-            alert('Error deleting user. Please try again.');
+            this.toastr.error('Error deleting user. Please try again.');
+
           }
         }
       );
