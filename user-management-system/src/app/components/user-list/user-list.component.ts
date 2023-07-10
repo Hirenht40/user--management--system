@@ -37,7 +37,7 @@ export class UserListComponent {
         () => {
           // Remove the deleted user from the array
           this.users = this.users.filter(user => user._id !== userId);
-          alert('User deleted successfully!');
+          this.toastr.success('User deleted successfully!');
         },
         (error) => {
           if (error.status === 200) {
